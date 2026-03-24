@@ -3,9 +3,8 @@ pipeline {
     
     environment {
         // Пути для Windows
-        LANG = "C.UTF-8"
-        LC_ALL = "C.UTF-8"
-	PYTHON_VENV = "${WORKSPACE}\\lab2\\venv"
+        PATH = "C:\\Users\\safry\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe;C:\\Python 3.9\\Scripts\\pip.exe"
+		PYTHON_VENV = "${WORKSPACE}\\lab2\\venv"
         DATA_DIR = "${WORKSPACE}\\lab2\\artifacts\\data"
         MODEL_DIR = "${WORKSPACE}\\lab2\\artifacts\\models"
         REPORT_DIR = "${WORKSPACE}\\lab2\\artifacts\\reports"

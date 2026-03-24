@@ -3,8 +3,7 @@ pipeline {
     
     environment {
         // Пути для Windows
-        PATH = "C:\\Users\\safry\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe;C:\\Python 3.9\\Scripts\\pip.exe"
-		PYTHON_VENV = "${WORKSPACE}\\lab2\\venv"
+        PYTHON_VENV = "${WORKSPACE}\\lab2\\venv"
         DATA_DIR = "${WORKSPACE}\\lab2\\artifacts\\data"
         MODEL_DIR = "${WORKSPACE}\\lab2\\artifacts\\models"
         REPORT_DIR = "${WORKSPACE}\\lab2\\artifacts\\reports"
@@ -21,21 +20,21 @@ pipeline {
         
         stage('Setup Python') {
             steps {
-                powershell '''
-					Set-Location "${env:WORKSPACE}\\lab2"
-					python -m venv venv
-					& .\\venv\\Scripts\\Activate.ps1
-					python -m pip install --upgrade pip
-					pip install -r requirements.txt
-				'''
+                bat '''
+                    cd lab2
+                    python -m venv venv
+                    call venv\\Scripts\\activate.bat
+                    python -m pip install --upgrade pip
+                    pip install -r requirements.txt
+                '''
             }
         }
         
         stage('Data Creation') {
             steps {
-                powershell '''
-					& "${env:WORKSPACE}\\lab2\\venv\\Scripts\\Activate.ps1"
-					Set-Location "${env:WORKSPACE}\\lab2"
+                bat '''
+                    call lab2\\venv\\Scripts\\activate.bat
+                    cd lab2
                     python data_creation.py --output-dir artifacts\\data --source synthetic
                 '''
             }
@@ -43,9 +42,9 @@ pipeline {
         
         stage('Data Preprocessing') {
             steps {
-                powershell '''
-					& "${env:WORKSPACE}\\lab2\\venv\\Scripts\\Activate.ps1"
-					Set-Location "${env:WORKSPACE}\\lab2"
+                bat '''
+                    call lab2\\venv\\Scripts\\activate.bat
+                    cd lab2
                     python data_preprocessing.py --data-dir artifacts\\data --output-dir artifacts\\data
                 '''
             }
@@ -53,9 +52,9 @@ pipeline {
         
         stage('Model Training') {
             steps {
-                powershell '''
-					& "${env:WORKSPACE}\\lab2\\venv\\Scripts\\Activate.ps1"
-					Set-Location "${env:WORKSPACE}\\lab2"
+                bat '''
+                    call lab2\\venv\\Scripts\\activate.bat
+                    cd lab2
                     python model_preparation.py --data-dir artifacts\\data --model-dir artifacts\\models
                 '''
             }
@@ -63,9 +62,9 @@ pipeline {
         
         stage('Model Testing') {
             steps {
-                powershell '''
-					& "${env:WORKSPACE}\\lab2\\venv\\Scripts\\Activate.ps1"
-					Set-Location "${env:WORKSPACE}\\lab2"
+                bat '''
+                    call lab2\\venv\\Scripts\\activate.bat
+                    cd lab2
                     python model_testing.py --data-dir artifacts\\data --model-dir artifacts\\models --report-dir artifacts\\reports
                 '''
             }

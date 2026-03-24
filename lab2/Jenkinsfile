@@ -22,11 +22,18 @@ pipeline {
         stage('Setup Python') {
             steps {
                 bat '''
-                    cd /d "%WORKSPACE%\\lab2"
-                    "C:\\Users\\safry\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe" -m venv venv
-                    call venv\\Scripts\\activate.bat
-                    venv\\Scripts\\python.exe -m pip install --upgrade pip
-                    venv\\Scripts\\pip.exe install -r requirements.txt
+                    echo Workspace: %WORKSPACE%
+                    echo PATH=%%PATH%%
+                    where python || echo python NOT FOUND
+                    where cmd || echo cmd NOT FOUND
+                    dir "%WORKSPACE%"
+                    if exist lab2 (
+                        echo lab2 exists
+                        cd /d lab2
+                        dir
+                    ) else (
+                        echo lab2 NOT FOUND
+                    )
                 '''
             }
         }

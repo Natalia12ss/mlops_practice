@@ -8,6 +8,8 @@ pipeline {
         MODEL_DIR = "${WORKSPACE}\\lab2\\artifacts\\models"
         REPORT_DIR = "${WORKSPACE}\\lab2\\artifacts\\reports"
         VENV_ACTIVATE = "${WORKSPACE}\\lab2\\venv\\Scripts\\activate.bat"
+        LANG = "C.UTF-8"
+        LC_ALL = "C.UTF-8"
     }
     
     stages {
